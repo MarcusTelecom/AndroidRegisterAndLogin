@@ -37,18 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         loading = findViewById(R.id.loading);
         name = findViewById(R.id.name);
-        email= findViewById(R.id.email);
+        email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         c_password = findViewById(R.id.c_password);
         btn_regist = findViewById(R.id.btn_regist);
-
-
-
-        name.setText("Marcus");
-        email.setText("marcus.ufsj@gmail.com");
-        password.setText("1234");
-        c_password.setText("1234");
-
 
 
         btn_regist.setOnClickListener(new View.OnClickListener() {
@@ -71,16 +63,16 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try{
+                        try {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
-                            if (success.equals("1")){
-                                Toast.makeText(RegisterActivity.this,"Register Success!",Toast.LENGTH_SHORT).show();
+                            if (success.equals("1")) {
+                                Toast.makeText(RegisterActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(RegisterActivity.this,"Register Error!" + e.toString(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "Register Error!" + e.toString(), Toast.LENGTH_LONG).show();
                             loading.setVisibility(View.GONE);
                             btn_regist.setVisibility(View.VISIBLE);
                         }
@@ -90,18 +82,17 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(RegisterActivity.this,"Register Error!" + error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Register Error!" + error.toString(), Toast.LENGTH_LONG).show();
                         loading.setVisibility(View.GONE);
                         btn_regist.setVisibility(View.VISIBLE);
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name",name);
+                params.put("name", name);
                 params.put("email", email);
-                params.put("password",password);
+                params.put("password", password);
                 return params;
             }
         };

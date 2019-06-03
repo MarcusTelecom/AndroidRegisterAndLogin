@@ -32,22 +32,20 @@ public class LoginActivity extends AppCompatActivity {
     private TextView link_regist;
     private ProgressBar loading;
     private static String URL_LOGIN = "http://192.168.2.120/bd_users/login.php";
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        sessionManager = new SessionManager(this);
+
         loading = findViewById(R.id.loading);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.btn_login);
         link_regist = findViewById(R.id.link_regist);
-
-
-        email.setText("marcus.ufsj@gmail.com");
-        password.setText("1234");
-
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +88,12 @@ public class LoginActivity extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String name = object.getString("name").trim();
                                     String email = object.getString("email").trim();
+
+                                    sessionManager.createSession(name,email);
+
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("email", email);
 
                                     startActivity(intent);
                                     loading.setVisibility(View.GONE);

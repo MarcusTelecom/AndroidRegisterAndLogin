@@ -6,8 +6,7 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
-public class SessionManager {
-    SharedPreferences sharedPreferences;
+public class SessionManager {SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
     public Context context;
     int PRIVATE_MODE = 0;
@@ -24,29 +23,30 @@ public class SessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public void createSession(String name, String email) {
+    public void createSession(String name, String email, String id){
 
         editor.putBoolean(LOGIN, true);
         editor.putString(NAME, name);
         editor.putString(EMAIL, email);
+        editor.putString(ID, id);
         editor.apply();
 
     }
 
-    public boolean isLoggin() {
+    public boolean isLoggin(){
         return sharedPreferences.getBoolean(LOGIN, false);
     }
 
-    public void checkLogin() {
+    public void checkLogin(){
 
-        if (!this.isLoggin()) {
+        if (!this.isLoggin()){
             Intent i = new Intent(context, LoginActivity.class);
             context.startActivity(i);
             ((HomeActivity) context).finish();
         }
     }
 
-    public HashMap<String, String> getUserDetail() {
+    public HashMap<String, String> getUserDetail(){
 
         HashMap<String, String> user = new HashMap<>();
         user.put(NAME, sharedPreferences.getString(NAME, null));
@@ -56,7 +56,7 @@ public class SessionManager {
         return user;
     }
 
-    public void logout() {
+    public void logout(){
 
         editor.clear();
         editor.commit();
@@ -65,5 +65,4 @@ public class SessionManager {
         ((HomeActivity) context).finish();
 
     }
-
 }
